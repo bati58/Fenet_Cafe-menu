@@ -79,6 +79,16 @@ const Menu = () => {
           <div className="menu-items-grid">
             {groupedMenu[category].map((item) => (
               <div key={item._id} className="menu-item-card">
+                {/* Image Display Block */}
+                <div className="item-image">
+                  <img 
+                    src={item.imageUrl} // Retrieves the image path from the MongoDB document (e.g., /images/chechebsa.jpg)
+                    alt={item.name} 
+                    // Optional: Fallback to a generic image if the specific image fails to load
+                    onError={(e) => { e.target.onerror = null; e.target.src = '/images/placeholder.jpg' }} 
+                  />
+                </div>
+                {/* End Image Display Block */}
                 <div className="item-details">
                   <h3>{item.name}</h3>
                   <p className="description">{item.description}</p>

@@ -1,6 +1,6 @@
 /* ===============================
-   GLOBAL & LAYOUT STYLES
-   =============================== */
+    GLOBAL & LAYOUT STYLES
+    =============================== */
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -18,8 +18,9 @@ body {
 }
 
 .content {
-    flex-grow: 1; /* Ensures main content takes up remaining space */
-    padding-bottom: 50px; /* Space above footer */
+    flex-grow: 1; 
+    padding-bottom: 50px; 
+    padding-top: 60px; 
 }
 
 h1, h2, h3 {
@@ -27,17 +28,20 @@ h1, h2, h3 {
 }
 
 /* ===============================
-   HEADER & FOOTER STYLES
-   =============================== */
-
+    HEADER & FOOTER STYLES
+    =============================== */
 .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
     background-color: #5d4037; /* Dark Brown */
     color: white;
-    padding: 15px 30px;
+    padding: 15px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .header .logo a {
@@ -47,11 +51,17 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
+.header .nav-links {
+    display: flex; 
+    flex-shrink: 0; 
+    margin-left: auto;
+}
+
 .header .nav-links a {
     color: white;
     text-decoration: none;
-    margin-left: 20px;
-    padding: 5px 10px;
+    margin-left: 5px;
+    padding: 10px 20px;
     transition: background-color 0.3s;
 }
 
@@ -70,8 +80,8 @@ h1, h2, h3 {
 }
 
 /* ===============================
-   HOME PAGE STYLES
-   =============================== */
+    HOME PAGE STYLES
+    =============================== */
 
 .hero-section {
     text-align: center;
@@ -118,6 +128,27 @@ h1, h2, h3 {
     border-radius: 4px;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+}
+
+.highlight-image {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px; 
+    border-radius: 50%; 
+    overflow: hidden;
+    border: 3px solid #38761d; /* Green accent border */
+    flex-shrink: 0;
+}
+
+.highlight-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .cta-button {
@@ -140,8 +171,8 @@ h1, h2, h3 {
 }
 
 /* ===============================
-   MENU PAGE STYLES
-   =============================== */
+    MENU PAGE STYLES
+    =============================== */
 
 .menu-page {
     padding: 20px;
@@ -176,13 +207,29 @@ h1, h2, h3 {
 
 .menu-item-card {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: center; 
+    justify-content: flex-start;
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item-image {
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid #b3523d;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .item-details {
@@ -209,8 +256,8 @@ h1, h2, h3 {
 }
 
 /* ===============================
-   CONTACT PAGE STYLES
-   =============================== */
+    CONTACT PAGE STYLES
+    =============================== */
 
 .contact-page {
     padding: 20px;
@@ -226,16 +273,17 @@ h1, h2, h3 {
     border-radius: 8px;
 }
 
+/* Hide the old placeholder class, as it's replaced by map-container */
 .map-placeholder {
-    height: 250px;
-    background-color: #e0e0e0;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-style: italic;
-    color: #666;
-    border-radius: 4px;
+    display: none;
+}
+
+/* Styling for the embedded map container */
+.map-container {
+    margin-top: 30px;
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .contact-form-container {
