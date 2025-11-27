@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <p>&copy; {currentYear} Fenet Cafe. All rights reserved.</p>
-      <p>Made with ❤️ and Buna.</p>
+      <p>Made with ❤️ and Kumeshi Beshada .</p>
     </footer>
   );
 };
