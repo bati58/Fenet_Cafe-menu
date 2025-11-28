@@ -51,8 +51,8 @@ const Contact = () => {
             {/* --- Contact Info --- */}
             <div className="contact-info">
                 <h2>Location & Hours</h2>
-                <p><strong>Address:</strong> Gelan, Oromia, Ethiopia</p>
-                <p><strong>Phone:</strong> +251 912 604707</p>
+                <p><strong>Address:</strong> Gelan Sub city, Oromia, Ethiopia</p>
+                <p><strong>Phone:</strong> +251 921 906059</p>
                 <p><strong>Hours:</strong> Mon - Sat: 7:00 AM - 9:00 PM | Sunday: 9:00 AM - 5:00 PM</p>
 
                 {/* --- EMBEDDED MAP CODE (Replaces map-placeholder) --- */}

@@ -1,7 +1,7 @@
 // frontend/src/pages/Menu.js
 
 import React, { useState, useEffect } from 'react';
-import '../App.css'; 
+import '../App.css';
 
 const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -13,24 +13,24 @@ const Menu = () => {
     const fetchMenu = async () => {
       try {
         // Proxy in package.json redirects this to http://localhost:5000/api/menu
-        const response = await fetch('/api/menu'); 
-        
+        const response = await fetch('/api/menu');
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        setMenuItems(data); 
+        setMenuItems(data);
       } catch (e) {
         console.error("Error fetching menu:", e);
         setError("Failed to load menu. Please ensure the backend server is running on port 5000.");
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
     fetchMenu();
-  }, []); 
+  }, []);
 
   // --- Display Logic ---
 
@@ -45,12 +45,12 @@ const Menu = () => {
   if (error) {
     return (
       <section className="menu-page error">
-        <h1 style={{color: 'red'}}>Data Error</h1>
+        <h1 style={{ color: 'red' }}>Data Error</h1>
         <p>{error}</p>
       </section>
     );
   }
-  
+
   // Helper function to group items by category
   const groupByCategory = (items) => {
     return items.reduce((acc, item) => {
@@ -64,28 +64,28 @@ const Menu = () => {
   };
 
   const groupedMenu = groupByCategory(menuItems);
-  
+
   return (
     <section className="menu-page">
       <h1>Fenet Cafe Menu 📜</h1>
       <p className="menu-intro">Fresh Ethiopian light meals, drinks, and baked goods, served with a smile.</p>
-      
+
       {/* Map through the categories and display menu items */}
       {Object.keys(groupedMenu).map((category) => (
         <div key={category} className="menu-category">
-          <h2>{category}</h2> 
-          <hr/>
-          
+          <h2>{category}</h2>
+          <hr />
+
           <div className="menu-items-grid">
             {groupedMenu[category].map((item) => (
               <div key={item._id} className="menu-item-card">
                 {/* Image Display Block */}
                 <div className="item-image">
-                  <img 
+                  <img
                     src={item.imageUrl} // Retrieves the image path from the MongoDB document (e.g., /images/chechebsa.jpg)
-                    alt={item.name} 
+                    alt={item.name}
                     // Optional: Fallback to a generic image if the specific image fails to load
-                    onError={(e) => { e.target.onerror = null; e.target.src = '/images/placeholder.jpg' }} 
+                    onError={(e) => { e.target.onerror = null; e.target.src = '/images/placeholder.jpg' }}
                   />
                 </div>
                 {/* End Image Display Block */}
