@@ -1,5 +1,8 @@
 # Fenet Cafe Menu
 
+## Screenshots
+![fenet cafe](frontend/public/images/sc-1.png)
+
 A full-stack cafe website with a React frontend and an Express + MongoDB backend.
 
 ## Features
@@ -66,5 +69,4 @@ CLOUDINARY_API_SECRET=your_api_secret
 CLOUDINARY_FOLDER=fenet-cafe
 ```
 
-## Screenshots
-![fenet cafe](frontend/public/images/sc-1.png)
+
