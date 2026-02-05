@@ -1,11 +1,22 @@
 // frontend/src/pages/About.js
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import aboutHeroBg from '../assets/about_bg.png';
+import { setPageMeta } from '../lib/meta';
 
 const About = () => {
+    useEffect(() => {
+        setPageMeta('Fenet Cafe | About', 'Learn about Fenet Cafe, Ethiopian coffee tradition, and our community roots.');
+    }, []);
+
     return (
         <div className="content about-page">
-            <section className="about-hero about-hero-bg">
+            <section
+                className="about-hero about-hero-bg"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${aboutHeroBg})`
+                }}
+            >
                 <h1>
                     Fenet Cafe: Where Tradition Meets Community
                 </h1>
@@ -15,9 +26,8 @@ const About = () => {
                 <p>
                     Founded in 2010, Fenet Cafe was conceived not just as a business,
                     but as a cultural heart for the community of Gelan, Oromia.
-                    Founded in 2010, Fenet Cafe was conceived not just as a business, but as a cultural heart for the community of Gelan,
-                    Oromia. We chose the name 'Fenet', which in Afan Oromo means "We wished it" or "We wanted it.
-                    "This symbolizes the cafe itself as the realization of a shared dream and a deep aspiration to bring authentic Ethiopian hospitality to life.
+                    We chose the name 'Fenet', which in Afan Oromo means "We wished it" or "We wanted it."
+                    This symbolizes the cafe itself as the realization of a shared dream and a deep aspiration to bring authentic Ethiopian hospitality to life.
                 </p>
 
                 <h3 style={{ color: '#b3523d', marginTop: '30px' }}>The Art of Buna (Coffee Ceremony)</h3>
@@ -43,7 +53,7 @@ const About = () => {
                         freshly pressed juices. Everything is prepared with locally sourced ingredients whenever possible.</li>
                 </ul>
                 <p>
-                    At Fenet Cafe, every visit is a journey back to the source—a connection to our heritage,
+                    At Fenet Cafe, every visit is a journey back to the source - a connection to our heritage,
                     a moment of fellowship, and a commitment to quality. We invite you to sit, slow down,
                     and share in our tradition.
                 </p>

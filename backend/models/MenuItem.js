@@ -11,6 +11,11 @@ const menuItemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+    trim: true,
+    default: '/images/placeholder.jpg',
+  },
   category: {
     type: String,
     required: true,

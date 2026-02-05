@@ -6,16 +6,27 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "render-build": "npm install --prefix frontend && npm run build --prefix frontend"
+    "render-build": "npm install --prefix frontend && npm run build --prefix frontend",
+    "seed": "node scripts/seed-menu.js",
+    "seed:reset": "node scripts/seed-menu.js --wipe"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.6.1",
+    "compression": "^1.8.0",
+    "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
+    "express-session": "^1.18.1",
+    "helmet": "^8.1.0",
+    "multer": "^1.4.5-lts.2",
+    "morgan": "^1.10.0",
     "mongoose": "^9.0.0"
   }
 }

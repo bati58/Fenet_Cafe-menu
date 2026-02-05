@@ -1,7 +1,7 @@
 // frontend/src/components/Header.js (Updated Code)
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import '../App.css';
 
 const Header = () => {
@@ -19,12 +19,11 @@ const Header = () => {
       </div>
       <nav className="nav-links">
         {/* Navigation Links */}
-        <Link to="/">Home</Link>
-        <Link to="/menu">Menu</Link>
-        <Link to="/contact">Contact</Link>
-
-        {/* ADDED EXTERNAL LINK EXAMPLE */}
-        <Link to="/about">About Us</Link>
+        <NavLink to="/" end>Home</NavLink>
+        <NavLink to="/menu">Menu</NavLink>
+        <NavLink to="/contact">Contact</NavLink>
+        <NavLink to="/about">About Us</NavLink>
+        <NavLink to="/admin">Admin</NavLink>
       </nav>
     </header>
   );

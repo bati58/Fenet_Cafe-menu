@@ -8,3 +8,6 @@ node_modules
 
 # Build outputs
 /frontend/build
+
+# Uploads
+/backend/uploads

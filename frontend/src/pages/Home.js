@@ -3,18 +3,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import homeHeroBg from '../assets/home_hero_bg.jpg';
+import { apiUrl, resolveImageUrl } from '../lib/api';
+import { setPageMeta } from '../lib/meta';
 
 const Home = () => {
     // 1. State to hold the menu data
     const [menuItems, setMenuItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(() => {
+        setPageMeta('Fenet Cafe | Home', 'Ethiopian cafe serving fresh breakfast, lunch, drinks, and baked goods.');
+    }, []);
+
     // 2. Fetch the full menu data from the API
     useEffect(() => {
         const fetchMenu = async () => {
             try {
                 // Uses the proxy in package.json to hit http://localhost:5000/api/menu
-                const response = await fetch('/api/menu');
+                const response = await fetch(apiUrl('/api/menu'));
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -29,9 +36,21 @@ const Home = () => {
         fetchMenu();
     }, []);
 
-    // 3. Filter the Featured Items dynamically
-    const shiroSandwich = menuItems.find(item => item.name === "Shiro Sandwich");
-    const sprissJuice = menuItems.find(item => item.name === "Spriss (Layered Juice)");
+    // 3. Pick random featured items dynamically
+    const [highlights, setHighlights] = useState([]);
+
+    const refreshHighlights = () => {
+        if (!menuItems.length) {
+            setHighlights([]);
+            return;
+        }
+        const shuffled = [...menuItems].sort(() => 0.5 - Math.random());
+        setHighlights(shuffled.slice(0, 2));
+    };
+
+    useEffect(() => {
+        refreshHighlights();
+    }, [menuItems]);
 
     // Conditional render for loading
     if (isLoading) {
@@ -47,7 +66,12 @@ const Home = () => {
     return (
         <section className="home-page">
             {/* 1. Hero Section */}
-            <div className="hero-section">
+            <div
+                className="hero-section"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${homeHeroBg})`
+                }}
+            >
                 <h1>Fenet Cafe</h1>
                 <p className="tagline">Your Taste of Ethiopia, Light and Fresh.</p>
             </div>
@@ -65,52 +89,37 @@ const Home = () => {
             {/* 3. Featured Items (Highlights) - NOW DYNAMIC WITH IMAGES */}
             <div className="highlights-section">
                 <h2>Today's Highlights</h2>
+                <button className="secondary-button refresh-button" type="button" onClick={refreshHighlights}>
+                    Refresh Highlights
+                </button>
                 <div className="highlight-cards">
                     {isLoading ? (
                         <p style={{ textAlign: 'center', width: '100%' }}>Loading highlights...</p>
-                    ) : (
-                        <> {/* Use a fragment to group multiple cards */}
-                            {/* Shiro Sandwich Highlight (Dynamic with Image) */}
-                            {shiroSandwich && (
-                                <div className="card">
-                                    <div className="highlight-image"> {/* NEW: Image Wrapper */}
+                    ) : highlights.length ? (
+                        <>
+                            {highlights.map((item, index) => (
+                                <div key={item._id} className="card">
+                                    <div className="highlight-image">
                                         <img
-                                            src={shiroSandwich.imageUrl}
-                                            alt={shiroSandwich.name}
+                                            src={resolveImageUrl(item.imageUrl)}
+                                            alt={item.name}
                                             onError={(e) => { e.target.onerror = null; e.target.src = '/images/placeholder.jpg' }}
                                         />
                                     </div>
-                                    <h3>Featured: {shiroSandwich.name}</h3>
-                                    <p>{shiroSandwich.description}</p>
+                                    <h3>{index === 0 ? 'Featured' : 'Must Try'}: {item.name}</h3>
+                                    <p>{item.description}</p>
                                 </div>
-                            )}
-
-                            {/* Spriss Juice Highlight (Dynamic with Image) */}
-                            {sprissJuice && (
-                                <div className="card">
-                                    <div className="highlight-image"> {/* NEW: Image Wrapper */}
-                                        <img
-                                            src={sprissJuice.imageUrl}
-                                            alt={sprissJuice.name}
-                                            onError={(e) => { e.target.onerror = null; e.target.src = '/images/placeholder.jpg' }}
-                                        />
-                                    </div>
-                                    <h3>Must Try: {sprissJuice.name.replace(' (Layered Juice)', '')}</h3>
-                                    <p>{sprissJuice.description}</p>
-                                </div>
-                            )}
-
-                            {!shiroSandwich && !sprissJuice && (
-                                <p style={{ textAlign: 'center', width: '100%' }}>Highlights coming soon!</p>
-                            )}
+                            ))}
                         </>
+                    ) : (
+                        <p style={{ textAlign: 'center', width: '100%' }}>Highlights coming soon!</p>
                     )}
                 </div>
             </div>
 
             {/* 4. Call to Action */}
             <div className="cta-section">
-                <Link to="/menu" className="cta-button">View Our Full Menu 🍽️</Link>
+                <Link to="/menu" className="cta-button">View Our Full Menu</Link>
             </div>
         </section>
     );
