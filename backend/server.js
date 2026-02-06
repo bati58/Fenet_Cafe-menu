@@ -198,6 +198,9 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   if (!name || name.length < 2 || name.length > 80) {
     return res.status(400).json({ message: 'Name must be between 2 and 80 characters.' });
   }
+  if (/\d/.test(name)) {
+    return res.status(400).json({ message: 'Name cannot contain numbers.' });
+  }
   if (!email || email.length > 254 || !isValidEmail(email)) {
     return res.status(400).json({ message: 'Please provide a valid email address.' });
   }

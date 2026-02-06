@@ -16,10 +16,41 @@ const Contact = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
+    const [fieldErrors, setFieldErrors] = useState({});
 
     useEffect(() => {
         setPageMeta('Fenet Cafe | Contact', 'Contact Fenet Cafe for reservations, catering, or questions.');
     }, []);
+
+    const validate = (values) => {
+        const errors = {};
+        const name = (values.name || '').trim();
+        const email = (values.email || '').trim();
+        const message = (values.message || '').trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!name) {
+            errors.name = 'Please enter your name.';
+        } else if (name.length < 2 || name.length > 80) {
+            errors.name = 'Name must be between 2 and 80 characters.';
+        } else if (/\d/.test(name)) {
+            errors.name = 'Name cannot contain numbers.';
+        }
+
+        if (!email) {
+            errors.email = 'Please enter your email address.';
+        } else if (email.length > 254 || !emailPattern.test(email)) {
+            errors.email = 'Please enter a valid email address.';
+        }
+
+        if (!message) {
+            errors.message = 'Please enter a message.';
+        } else if (message.length < 10 || message.length > 2000) {
+            errors.message = 'Message must be between 10 and 2000 characters.';
+        }
+
+        return errors;
+    };
 
     // Handle input changes
     const handleChange = (e) => {
@@ -28,6 +59,16 @@ const Contact = () => {
             ...prevState,
             [name]: value
         }));
+        if (fieldErrors[name]) {
+            setFieldErrors(prev => {
+                const next = { ...prev };
+                delete next[name];
+                return next;
+            });
+        }
+        if (submitError) {
+            setSubmitError('');
+        }
     };
 
     // Handle form submission
@@ -35,36 +76,44 @@ const Contact = () => {
         e.preventDefault();
         setSubmitError('');
 
-        // Basic client-side validation
-        if (formData.name && formData.email && formData.message) {
-            try {
-                setIsSubmitting(true);
-                const response = await fetch(apiUrl('/api/contact'), {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
+        const errors = validate(formData);
+        if (Object.keys(errors).length > 0) {
+            setFieldErrors(errors);
+            setSubmitError('Please correct the highlighted fields.');
+            return;
+        }
 
-                if (!response.ok) {
-                    const data = await response.json().catch(() => ({}));
-                    throw new Error(data.message || 'Failed to send message. Please try again.');
-                }
+        try {
+            setIsSubmitting(true);
+            const payload = {
+                name: formData.name.trim(),
+                email: formData.email.trim(),
+                message: formData.message.trim()
+            };
+            const response = await fetch(apiUrl('/api/contact'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
 
-                setIsSubmitted(true);
-                setFormData({ name: '', email: '', message: '' });
-
-                setTimeout(() => {
-                    setIsSubmitted(false);
-                }, 5000);
-            } catch (err) {
-                setSubmitError(err.message);
-            } finally {
-                setIsSubmitting(false);
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.message || 'Failed to send message. Please try again.');
             }
-        } else {
-            alert('Please fill out all fields.');
+
+            setIsSubmitted(true);
+            setFieldErrors({});
+            setFormData({ name: '', email: '', message: '' });
+
+            setTimeout(() => {
+                setIsSubmitted(false);
+            }, 5000);
+        } catch (err) {
+            setSubmitError(err.message);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -112,15 +161,53 @@ const Contact = () => {
                         </p>
                     )}
 
-                    <form className="contact-form" onSubmit={handleSubmit}>
+                    <form className="contact-form" onSubmit={handleSubmit} noValidate>
                         <label htmlFor="name">Name</label>
-                        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className={fieldErrors.name ? 'input-error' : ''}
+                            aria-invalid={fieldErrors.name ? 'true' : 'false'}
+                            aria-describedby={fieldErrors.name ? 'name-error' : undefined}
+                            minLength={2}
+                            maxLength={80}
+                            required
+                        />
+                        {fieldErrors.name && <p className="field-error" id="name-error">{fieldErrors.name}</p>}
 
                         <label htmlFor="email">Email</label>
-                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className={fieldErrors.email ? 'input-error' : ''}
+                            aria-invalid={fieldErrors.email ? 'true' : 'false'}
+                            aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+                            maxLength={254}
+                            required
+                        />
+                        {fieldErrors.email && <p className="field-error" id="email-error">{fieldErrors.email}</p>}
 
                         <label htmlFor="message">Message</label>
-                        <textarea id="message" name="message" rows="5" value={formData.message} onChange={handleChange} required />
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            value={formData.message}
+                            onChange={handleChange}
+                            className={fieldErrors.message ? 'input-error' : ''}
+                            aria-invalid={fieldErrors.message ? 'true' : 'false'}
+                            aria-describedby={fieldErrors.message ? 'message-error' : undefined}
+                            minLength={10}
+                            maxLength={2000}
+                            required
+                        />
+                        {fieldErrors.message && <p className="field-error" id="message-error">{fieldErrors.message}</p>}
 
                         <button type="submit" className="submit-button" disabled={isSubmitting}>
                             {isSubmitting ? 'Sending...' : 'Send Message'}

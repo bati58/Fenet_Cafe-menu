@@ -5,15 +5,11 @@ import { FaTiktok, FaInstagram, FaTelegram } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  return (
+const Footer = () => (
     <footer className="footer">
       <div className="footer-brand">
         <h3>Fenet Cafe</h3>
         <p>Fresh Ethiopian breakfast, lunch, drinks, and baked goods.</p>
-        <p>&copy; {currentYear} Fenet Cafe. All rights reserved.</p>
       </div>
 
       <div className="footer-contact">
@@ -48,8 +44,8 @@ const Footer = () => {
         </div>
       </div>
       {/* --- END SOCIAL MEDIA LINKS --- */}
+      <div className="footer-bottom">&copy; 2026 Fenet Cafe. All rights reserved.</div>
     </footer>
-  );
-};
+);
 
 export default Footer;
