@@ -34,19 +34,19 @@ const Home = () => {
             }
         };
         fetchMenu();
-    }, [refreshHighlights, menuItems]);
+    }, [menuItems]);
 
     // 3. Pick random featured items dynamically
     const [highlights, setHighlights] = useState([]);
 
-    const refreshHighlights = () => {
+    const refreshHighlights = useCallback (() => {
         if (!menuItems.length) {
             setHighlights([]);
             return;
         }
         const shuffled = [...menuItems].sort(() => 0.5 - Math.random());
         setHighlights(shuffled.slice(0, 2));
-    };
+    }, [menuItems];
 
     useEffect(() => {
         refreshHighlights();
