@@ -50,7 +50,7 @@ const Home = () => {
 
     useEffect(() => {
         refreshHighlights();
-    }, [menuItems]);
+    }, [refreshHighlights]);
 
     // Conditional render for loading
     if (isLoading) {
