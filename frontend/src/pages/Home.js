@@ -34,7 +34,7 @@ const Home = () => {
             }
         };
         fetchMenu();
-    }, [refreshHighlights]);
+    }, [refreshHighlights, menuItems]);
 
     // 3. Pick random featured items dynamically
     const [highlights, setHighlights] = useState([]);
