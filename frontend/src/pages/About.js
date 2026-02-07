@@ -20,17 +20,18 @@ const About = () => {
                 <h1>
                     Fenet Cafe: Where Tradition Meets Community
                 </h1>
+                
             </section>
 
             <section className="about-content" style={{ maxWidth: '800px', margin: '40px auto', padding: '0 20px', lineHeight: '1.6' }}>
-                <p>
-                    Founded in 2010, Fenet Cafe was conceived not just as a business,
-                    but as a cultural heart for the community of Gelan, Oromia.
-                    We chose the name 'Fenet', which in Afan Oromo means "We wished it" or "We wanted it."
-                    This symbolizes the cafe itself as the realization of a shared dream and a deep aspiration to bring authentic Ethiopian hospitality to life.
+                <h1 style={{ color: '#b3523d', marginTop: '30px' }}>Every Bite Tells a Story</h1>
+                <p> 
+                    Fenet Cafe brings the vibrant culture and rich culinary traditions of Ethiopia to Aurora. 
+                    Our menu is inspired by generations of family recipes, each dish a celebration of authentic Ethiopian flavors.
                 </p>
+                <h2 style={{ color: '#b3523d', marginTop: '30px' }}>The Art of Buna (Coffee Ceremony)
 
-                <h3 style={{ color: '#b3523d', marginTop: '30px' }}>The Art of Buna (Coffee Ceremony)</h3>
+                </h2>
                 <p>
                     Our daily life centers on Buna, the traditional Ethiopian coffee ceremony.
                     This is more than just a drink; it's a social ritual of peace and gathering.
