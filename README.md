@@ -1,7 +1,7 @@
 # Fenet Cafe Menu
 
 ## Screenshots
-![fenet cafe](frontend/public/images/screenshot.png)
+![fenet cafe](frontend/public/images/herobg.jpg)
 
 A full-stack cafe website with a React frontend and an Express + MongoDB backend.
 
