@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-import homeHeroBg from '../assets/home_hero_bg.jpg';
+import homeHeroBg from '../publiv/herobg.jpg';
 import { apiUrl, resolveImageUrl } from '../lib/api';
 import { setPageMeta } from '../lib/meta';
 
